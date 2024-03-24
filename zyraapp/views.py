@@ -9,15 +9,14 @@ from .models import UploadedImage
 from django.conf import settings
 import os
 import json
-import pickle
+from tensorflow.keras.models import load_model
+import os
 
 # Importez la fonction de prédiction de votre script AI
 def predict_disease_severity(image_path):
     # Chargez le modèle
-
-    model_path = os.path.join(os.path.dirname(__file__), 'modelNEW.pkl')
-    with open(model_path, 'rb') as file:
-        model = pickle.load(file)
+    model_path = os.path.join(os.path.dirname(__file__), 'modelDensenet100.h5')
+    model = load_model(model_path)
     
     # Fonction de prétraitement de l'image (à adapter selon votre besoin)
     def preprocess_image(image_path, target_size=(224, 224)):
